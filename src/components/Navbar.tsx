@@ -1,8 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 
 export default function Navbar() {
   const { user, logout } = useAuth();
+  const location = useLocation();
 
   return (
     <nav className="bg-gray-900 text-white px-4 py-2 flex justify-between items-center">
@@ -23,8 +24,12 @@ export default function Navbar() {
           </>
         ) : (
           <>
-            <Link to="/login">Login</Link>
-            <Link to="/signup">Signup</Link>
+            {location.pathname !== "/login" && (
+              <Link to="/login">Login</Link>
+            )}
+            {location.pathname !== "/signup" && (
+              <Link to="/signup">Signup</Link>
+            )}
           </>
         )}
       </div>
