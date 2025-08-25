@@ -2,7 +2,7 @@ import { useState } from "react";
 import { signup } from "../../services/authService";
 import { useNavigate, Link } from "react-router-dom";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
-
+import signUp from "../../../public/images/signUpPic.svg"
 export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -30,7 +30,7 @@ export default function Signup() {
                 {/* Right side - Illustration */}
         <div className="hidden md:flex w-1/2 items-center justify-center bg-white">
           <img
-            src="public/images/signUpPic.svg"
+            src={signUp}
             alt="Login illustration"
             className="w-full h-auto"
           />

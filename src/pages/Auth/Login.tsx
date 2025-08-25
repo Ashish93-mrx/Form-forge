@@ -3,6 +3,7 @@ import { login } from "../../services/authService";
 import { useNavigate, Link } from "react-router-dom";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import { useAuth } from "../../hooks/useAuth";
+import loginPic from "../../../public/images/loginPic.svg";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -136,7 +137,7 @@ const handleSubmit = async (e: React.FormEvent) => {
       {/* Right side - Illustration */}
       <div className="hidden md:flex w-1/2 items-center justify-center bg-white">
         <img
-          src="public/images/loginPic.svg"
+          src={loginPic}
           alt="Login illustration"
           className="w-full h-auto"
         />
