@@ -7,7 +7,6 @@ import FormResponses from "../pages/FormResponses";
 import PublicForm from "../pages/PublicForm";
 import Home from "../pages/Home";
 import NotFound from "../pages/NotFound";
-import FormBuilder from "../components/forms/FormBuilder/FormBuilder";
 import CreateFormPage from "../pages/forms/CreateFormPage";
 import EditForm from "../pages/EditForm";
 

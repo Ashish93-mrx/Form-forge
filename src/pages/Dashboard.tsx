@@ -99,12 +99,12 @@ export default function Dashboard() {
           {forms.map((form) => (
             <div
               key={form.id}
-              className="bg-white border border-gray-200 shadow-sm hover:shadow-md transition rounded-lg p-5 flex flex-col justify-between"
+              className="bg-white border border-gray-200 shadow-sm hover:shadow-lg transition rounded-xl p-5 flex flex-col justify-between"
             >
               {/* Form Info */}
               <div>
                 <h3 className="text-lg font-semibold text-gray-800">{form.title}</h3>
-                <p className="text-sm text-gray-500 mb-3 truncate">
+                <p className="text-sm text-gray-500 mb-3 line-clamp-2">
                   {form.subtitle || " "}
                 </p>
                 <a
@@ -119,7 +119,7 @@ export default function Dashboard() {
 
               {/* Dropdown for actions */}
               <div className="mt-4 flex justify-between">
-                <div className="px-3 py-1.5 bg-gray-200 rounded-md hover:bg-gray-300 text-sm font-medium">
+                <div className="px-4 py-2 bg-indigo-600 text-white rounded-md text-sm font-medium shadow-sm hover:bg-indigo-700 transition">
 
                   <Link
                     to={`/responses/${form.id}`}
@@ -133,7 +133,7 @@ export default function Dashboard() {
                     ⋮
                   </Menu.Button>
 
-                  <Menu.Items className="absolute right-0 mt-2 w-40 origin-top-right bg-white border border-gray-200 rounded-md shadow-lg focus:outline-none z-10">
+                  <Menu.Items className="absolute right-0 mt-2 w-44 origin-top-right bg-white border border-gray-100 rounded-lg shadow-lg ring-1  ring-opacity-5 focus:outline-none z-10">
                     <div className="py-1">
                       <Menu.Item>
                         {({ active }: { active: boolean }) => (

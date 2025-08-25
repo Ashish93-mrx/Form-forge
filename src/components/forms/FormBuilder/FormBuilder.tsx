@@ -4,12 +4,9 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { useFormBuilder, type FormField } from "./useFormBuilder";
+import { useFormBuilder } from "./useFormBuilder";
 import FieldItem from "./FieldItem";
 import SortableField from "./SortableField";
-import { createForm } from "../../../services/firestoreService";
-import { useAuth } from "../../../hooks/useAuth";
-import { useState } from "react";
 
 const FIELD_TYPES = [
   { type: "short_text" as const, label: "Short Text" },
@@ -50,11 +47,6 @@ export default function FormBuilder({
     reorderFields,
     toggleRequired
   } = useFormBuilder(initialFields, initialSettings, initialMeta);
-  const { user } = useAuth();
-
-  // New states for title & subtitle
-  const [title, setTitle] = useState("Untitled Company");
-  const [subtitle, setSubtitle] = useState("Untitled Section");
 
   const handlePublish = () => {
     // sanitize

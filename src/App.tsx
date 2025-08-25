@@ -7,7 +7,10 @@ import { Toaster } from "sonner";
 export default function App() {
   return (
     <div className="min-h-screen bg-gray-100">
-      <Navbar />
+      <div className="sticky top-0 z-50">
+        <Navbar />
+      </div>
+
       <AppRoutes />
       <Toaster richColors position="top-right" />
     </div>
