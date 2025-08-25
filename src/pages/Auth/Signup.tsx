@@ -30,7 +30,7 @@ export default function Signup() {
                 {/* Right side - Illustration */}
         <div className="hidden md:flex w-1/2 items-center justify-center bg-white">
           <img
-            src="src/assets/images/signUpPic.svg"
+            src="public/images/signUpPic.svg"
             alt="Login illustration"
             className="w-full h-auto"
           />

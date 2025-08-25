@@ -136,7 +136,7 @@ const handleSubmit = async (e: React.FormEvent) => {
       {/* Right side - Illustration */}
       <div className="hidden md:flex w-1/2 items-center justify-center bg-white">
         <img
-          src="src/assets/images/loginPic.svg"
+          src="public/images/loginPic.svg"
           alt="Login illustration"
           className="w-full h-auto"
         />
