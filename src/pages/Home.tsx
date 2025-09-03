@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import formPreview from "../../public/images/formforgepost.png";
+
 
 export default function Home() {
     return (
@@ -100,7 +102,14 @@ export default function Home() {
                     </div>
                     <div className="bg-gray-100 border border-gray-200 rounded-xl h-72 flex items-center justify-center shadow-inner">
                         {/* Placeholder for screenshot */}
-                        <span className="text-gray-500">[ Form Screenshot Preview ]</span>
+                        <div className="bg-gray-100 border border-gray-200 rounded-xl h-80 flex items-center justify-center shadow-inner overflow-hidden">
+                            <img
+                                src={formPreview}
+                                alt="Form preview"
+                                className="object-cover w-full h-full"
+                            />
+                        </div>
+
                     </div>
                 </div>
             </section>
