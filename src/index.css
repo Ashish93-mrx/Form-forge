@@ -55,3 +55,14 @@
   background: #71717a; /* Tailwind gray-500 */
 }
 
+/* Hide default browser password reveal icon (Edge/Chrome) */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}
+
+input[type="password"]::-webkit-credentials-auto-fill-button,
+input[type="password"]::-webkit-textfield-decoration-container {
+  display: none !important;
+}
+

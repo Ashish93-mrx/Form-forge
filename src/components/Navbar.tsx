@@ -14,10 +14,12 @@ export default function Navbar() {
       <div className="space-x-4">
         {user ? (
           <>
+          {location.pathname !== "/dashboard" && (
             <Link to="/dashboard">Dashboard</Link>
+            )}
             <button
               onClick={logout}
-              className="bg-red-500 px-3 py-1 rounded"
+              className="bg-red-500 cursor-pointer px-3 py-1 rounded"
             >
               Logout
             </button>

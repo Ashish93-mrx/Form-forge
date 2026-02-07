@@ -3,7 +3,6 @@ import AppRoutes from "./routes/AppRoutes";
 import "./index.css";
 import { Toaster } from "sonner";
 
-
 export default function App() {
   return (
     <div className="min-h-screen bg-gray-100">
