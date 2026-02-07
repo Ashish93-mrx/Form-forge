@@ -7,6 +7,7 @@ import {
 import { useFormBuilder } from "./useFormBuilder";
 import FieldItem from "./FieldItem";
 import SortableField from "./SortableField";
+import { useEffect, useRef, useState } from "react";
 
 const FIELD_TYPES = [
   { type: "short_text" as const, label: "Short Text" },
@@ -24,7 +25,11 @@ type FormBuilderProps = {
   initialFields?: any[];
   initialSettings?: any;
   initialMeta?: { title: string; subtitle: string };
-  onSave: (fields: any[], settings: any, meta: { title: string; subtitle: string }) => void;
+  onSave: (
+    fields: any[],
+    settings: any,
+    meta: { title: string; subtitle: string },
+  ) => void;
 };
 
 export default function FormBuilder({
@@ -45,11 +50,27 @@ export default function FormBuilder({
     removeField,
     addField,
     reorderFields,
-    toggleRequired
+    toggleRequired,
   } = useFormBuilder(initialFields, initialSettings, initialMeta);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [values, setValues] = useState<Record<string, string>>({});
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setOpenDropdown(null);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const handlePublish = () => {
-    // sanitize
     const safeFields = fields.map((f) => ({
       ...f,
       options: f.options ?? [],
@@ -67,8 +88,6 @@ export default function FormBuilder({
     onSave(safeFields, safeSettings, safeMeta);
   };
 
-
-
   const handleDragEnd = (event: any) => {
     const { active, over } = event;
     if (active.id !== over?.id) {
@@ -80,18 +99,20 @@ export default function FormBuilder({
 
   return (
     <div className="bg-gray-150 p-2 h-lvh">
-
       <div className="grid font-Mont grid-cols-1 md:grid-cols-[40%_60%] gap-1">
-        {/* 🔹 Left: Controls with vertical scroll */}
         <div
           className="bg-white shadow-md rounded-lg px-6 pt-2 border border-gray-200 
              max-h-[90vh] overflow-y-auto flex flex-col
              scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 
              hover:scrollbar-thumb-gray-500"
         >
-          {/* Title & Subtitle */}
-          <h2 className="text-lg font-semibold mb-3 text-gray-800">Form Settings</h2>
-          <label htmlFor="formTitle" className="block font-medium text-gray-700 mb-1">
+          <h2 className="text-lg font-semibold mb-3 text-gray-800">
+            Form Settings
+          </h2>
+          <label
+            htmlFor="formTitle"
+            className="block font-medium text-gray-700 mb-1"
+          >
             Company / Project Name
           </label>
           <input
@@ -111,7 +132,6 @@ export default function FormBuilder({
             required
           />
 
-          {/* Background Picker */}
           <label className="block font-medium text-gray-700 mb-2">
             Form Background Color:
           </label>
@@ -131,39 +151,52 @@ export default function FormBuilder({
             />
           </div>
 
-
-          {/* Add Fields */}
-          <h2 className="text-lg font-semibold mb-3 text-gray-800">Add Fields</h2>
+          <h2 className="text-lg font-semibold mb-3 text-gray-800">
+            Add Fields
+          </h2>
           <div className="flex flex-wrap gap-2 mb-8">
             {FIELD_TYPES.map((ft) => (
               <button
                 key={ft.type}
                 onClick={() => addField(ft.type)}
-                className="bg-indigo-50 text-indigo-600 border border-indigo-200 hover:bg-indigo-100 
-                     px-3 py-2 rounded-md text-sm transition"
+                className="
+  bg-gradient-to-br from-indigo-50 to-indigo-100 
+  text-indigo-700 border border-indigo-200 
+  px-3 py-2 rounded-lg text-sm font-medium
+  shadow-sm hover:shadow-md
+  hover:from-indigo-100 hover:to-indigo-200
+  active:scale-95 active:shadow-inner
+  transition-all duration-150 ease-out
+  cursor-pointer
+  select-none
+  "
               >
                 {ft.label}
               </button>
             ))}
           </div>
 
-          {/* Your Form Fields */}
-          <h2 className="text-lg font-semibold mb-3 text-gray-800">Your Form</h2>
+          <h2 className="text-lg font-semibold mb-3 text-gray-800">
+            Your Form
+          </h2>
           <div className="space-y-3 flex-1">
-            <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+            <DndContext
+              collisionDetection={closestCenter}
+              onDragEnd={handleDragEnd}
+            >
               <SortableContext
                 items={fields.map((f) => f.id)}
                 strategy={verticalListSortingStrategy}
               >
                 {fields.map((field) => (
                   <SortableField key={field.id} id={field.id}>
-                    <div className="bg-gray-50 border border-gray-200 rounded-md p-3 hover:shadow transition">
+                    <div className="">
                       <FieldItem
                         field={field}
                         onLabelChange={updateLabel}
                         onOptionChange={updateOptions}
                         onRemove={removeField}
-                        onToggleRequired={toggleRequired} 
+                        onToggleRequired={toggleRequired}
                       />
                     </div>
                   </SortableField>
@@ -195,90 +228,192 @@ export default function FormBuilder({
           className="p-7 shadow-inner border border-gray-200 max-h-[100vh] overflow-y-auto justify-center"
         >
           <div className="flex items-center justify-center">
-
             <div className="w-full max-w-xl bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
-
-              <h2 className="font-bold text-2xl mb-2 text-gray-900">{formMeta.title}</h2>
+              <h2 className="font-bold text-2xl mb-2 text-gray-900">
+                {formMeta.title}
+              </h2>
               <p className="text-gray-600 mb-6">{formMeta.subtitle}</p>
 
               <form className="space-y-5">
                 {fields.map((f) => (
                   <div key={f.id}>
-                    <label htmlFor={`field-${f.id}`} className="block mb-1 font-medium text-gray-700">{f.label}</label>
+                    <label
+                      htmlFor={`field-${f.id}`}
+                      className="block mb-1 font-medium text-gray-700"
+                    >
+                      {f.label}
+                    </label>
 
                     {f.type === "long_text" && (
-                      <textarea className="border border-gray-300 rounded-md p-3 w-full 
+                      <textarea
+                        className="border border-gray-300 rounded-md p-3 w-full 
                                  focus:outline-none focus:border-transparent focus:ring-2 focus:ring-indigo-500"
-                                   required={f.required} 
-                                  />
+                        required={f.required}
+                      />
                     )}
                     {f.type === "short_text" && (
-                      <input type="text" className="border border-gray-300 rounded-md p-3 w-full 
+                      <input
+                        type="text"
+                        className="border border-gray-300 rounded-md p-3 w-full 
                                  focus:outline-none focus:border-transparent focus:ring-2 focus:ring-indigo-500"
-                                   required={f.required} 
-                                  />
+                        required={f.required}
+                      />
                     )}
                     {f.type === "email" && (
-                      <input type="email" className="border border-gray-300 rounded-md p-3 w-full 
+                      <input
+                        type="email"
+                        className="border border-gray-300 rounded-md p-3 w-full 
                                  focus:outline-none focus:border-transparent focus:ring-2 focus:ring-indigo-500"
-                                   required={f.required} 
-                                 />
+                        required={f.required}
+                      />
                     )}
                     {f.type === "date" && (
-                      <input type="date" className="border border-gray-300 rounded-md p-3 w-full 
+                      <input
+                        type="date"
+                        className="border border-gray-300 rounded-md p-3 w-full 
                                  focus:outline-none focus:border-transparent focus:ring-2 focus:ring-indigo-500"
-                                   required={f.required} 
-                                 />
+                        required={f.required}
+                      />
                     )}
                     {f.type === "number" && (
-                      <input type="number" className="border border-gray-300 rounded-md p-3 w-full 
+                      <input
+                        type="number"
+                        className="border border-gray-300 rounded-md p-3 w-full 
                                  focus:outline-none focus:border-transparent focus:ring-2 focus:ring-indigo-500"
-                                   required={f.required} 
-                                 />
+                        required={f.required}
+                      />
                     )}
 
-                    {f.type === "checkbox_group" &&
+                    {f.type === "checkbox_group" && (
                       <fieldset>
                         <legend className="font-medium text-gray-700 mb-1"></legend>
-                      {f.options?.map((opt, idx) => (
-                        <label key={idx} className="block text-gray-700">
-                          <input type="checkbox" className="mr-2 accent-indigo-500"
-                            required={f.required} 
-                          /> {opt}
-                        </label>
+                        {f.options?.map((opt, idx) => (
+                          <label key={idx} className="block text-gray-700">
+                            <input
+                              type="checkbox"
+                              className="mr-2 accent-indigo-500"
+                              required={f.required}
+                            />{" "}
+                            {opt}
+                          </label>
                         ))}
                       </fieldset>
-                    }
+                    )}
                     {f.type === "radio_group" &&
                       f.options?.map((opt, idx) => (
-                        <label key={idx} className="block text-gray-700">
-                          <input type="radio" name={f.id} className="mr-2 accent-indigo-500"
-                            required={f.required} 
-                           /> {opt}
+                        <label
+                          key={idx}
+                          className="flex items-center space-x-2 text-gray-700 mb-1"
+                        >
+                          <input
+                            type="radio"
+                            name={f.id}
+                            className="w-5 h-5 cursor-pointer text-blue-600 border-gray-300 focus:ring-blue-500"
+                            required={f.required}
+                          />
+                          <span>{opt}</span>
                         </label>
                       ))}
 
                     {f.type === "select" && (
-                      <select className="border border-gray-300 rounded-md p-3 w-full 
-                               focus:outline-none focus:border-transparent focus:ring-2 focus:ring-indigo-500"
-                                 required={f.required} 
-                               >
-                        {f.options?.map((opt, idx) => (
-                          <option key={idx}>{opt}</option>
-                        ))}
-                      </select>
+                      <div className="relative" ref={dropdownRef}>
+                        {/* selected box */}
+                        <div
+                          onClick={() =>
+                            setOpenDropdown(openDropdown === f.id ? null : f.id)
+                          }
+                          className="
+      border border-gray-300 bg-white
+      rounded-lg px-4 py-3
+      flex justify-between items-center
+      cursor-pointer
+      hover:border-gray-400
+      hover:shadow-sm
+      transition-all duration-150
+      "
+                        >
+                          <span
+                            className={
+                              values[f.id] ? "text-gray-800" : "text-gray-400"
+                            }
+                          >
+                            {values[f.id] || "Select option"}
+                          </span>
+
+                          {/* arrow */}
+                          <svg
+                            className={`w-5 h-5 text-gray-400 transition-transform ${
+                              openDropdown === f.id ? "rotate-180" : ""
+                            }`}
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M19 9l-7 7-7-7"
+                            />
+                          </svg>
+                        </div>
+
+                        {/* dropdown list */}
+                        {openDropdown === f.id && (
+                          <div
+                            className="
+        absolute z-50 mt-2 w-full
+        bg-white border border-gray-200
+        rounded-xl shadow-lg
+        max-h-60 overflow-y-auto
+        animate-fadeIn
+        "
+                          >
+                            {f.options?.map((opt, idx) => (
+                              <div
+                                key={idx}
+                                onClick={() => {
+                                  setValues((prev) => ({
+                                    ...prev,
+                                    [f.id]: opt,
+                                  }));
+                                  setOpenDropdown(null);
+                                }}
+                                className="
+            px-4 py-3
+            hover:bg-indigo-50
+            hover:text-indigo-600
+            cursor-pointer
+            transition
+            first:rounded-t-xl
+            last:rounded-b-xl
+            "
+                              >
+                                {opt}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
                     )}
 
                     {f.type === "boolean" && (
                       <label className="flex items-center text-gray-700">
-                        <input type="checkbox" className="mr-2 accent-indigo-500"
-                          required={f.required} 
-                         /> Yes
+                        <input
+                          type="checkbox"
+                          className="mr-2 accent-indigo-500"
+                          required={f.required}
+                        />{" "}
+                        Yes
                       </label>
                     )}
                   </div>
                 ))}
-                <button onClick={(e) => e.preventDefault()} className="bg-blue-500 text-white px-4 py-2 rounded">
+                <button
+                  onClick={(e) => e.preventDefault()}
+                  className="w-full bg-blue-600 cursor-pointer hover:bg-blue-700 text-white px-5 py-3 rounded-lg 
+                     font-medium shadow-md transition"
+                >
                   Submit
                 </button>
               </form>
