@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { signup } from "../../services/authService";
 import { useNavigate, Link } from "react-router-dom";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import signUp from "../../../public/images/signUpPic.svg";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function Signup() {
   const [email, setEmail] = useState("");
@@ -12,6 +13,13 @@ export default function Signup() {
   const navigate = useNavigate();
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if (user) {
+      navigate("/dashboard");
+    }
+  }, [user, navigate]);
 
   const isValidEmail = (value: string) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
@@ -128,9 +136,7 @@ export default function Signup() {
                   if (!value.trim()) {
                     setPasswordError("Password is required.");
                   } else if (value.length < 6) {
-                    setPasswordError(
-                      "Password must be at least 6 characters."
-                    );
+                    setPasswordError("Password must be at least 6 characters.");
                   } else {
                     setPasswordError("");
                   }

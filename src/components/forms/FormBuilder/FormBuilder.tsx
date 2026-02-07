@@ -8,6 +8,7 @@ import { useFormBuilder } from "./useFormBuilder";
 import FieldItem from "./FieldItem";
 import SortableField from "./SortableField";
 import { useEffect, useRef, useState } from "react";
+import { publish } from "../../../assets";
 
 const FIELD_TYPES = [
   { type: "short_text" as const, label: "Short Text" },
@@ -98,134 +99,138 @@ export default function FormBuilder({
   };
 
   return (
-    <div className="bg-gray-150 p-2 h-lvh">
+    <div className="bg-gray-150 p-2">
       <div className="grid font-Mont grid-cols-1 md:grid-cols-[40%_60%] gap-1">
         <div
-          className="bg-white shadow-md rounded-lg px-6 pt-2 border border-gray-200 
+          className="bg-white shadow-md rounded-lg pt-2 border border-gray-200 
              max-h-[90vh] overflow-y-auto flex flex-col
              scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 
              hover:scrollbar-thumb-gray-500"
         >
-          <h2 className="text-lg font-semibold mb-3 text-gray-800">
-            Form Settings
-          </h2>
-          <label
-            htmlFor="formTitle"
-            className="block font-medium text-gray-700 mb-1"
-          >
-            Company / Project Name
-          </label>
-          <input
-            type="text"
-            value={formMeta.title}
-            onChange={(e) => updateTitle(e.target.value)}
-            className="border border-gray-300 rounded-md p-3 w-full mb-3 
-                 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-blue-500"
-          />
-          <input
-            type="text"
-            value={formMeta.subtitle}
-            onChange={(e) => updateSubtitle(e.target.value)}
-            placeholder="Form Purpose (e.g., Job Application, Survey)"
-            className="border border-gray-300 rounded-md p-3 w-full mb-6 
-                 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-blue-500"
-            required
-          />
-
-          <label className="block font-medium text-gray-700 mb-2">
-            Form Background Color:
-          </label>
-          <div className="flex items-center gap-2 mb-6">
+          <div className="px-6 pt-4">
+            <div className="grid grid-cols-3 pb-4">
+              <h2 className="col-span-2 text-lg font-semibold mb-3 text-gray-800">
+                Form Settings
+              </h2>
+              <button
+                onClick={handlePublish}
+                className=" col-span-1
+      w-full bg-green-600 hover:bg-green-700
+      text-white font-medium
+      px-4 py-3 rounded-xl
+      shadow-md hover:shadow-lg
+      transition cursor-pointer flex justify-around
+      "
+              >
+                <span>Publish Form</span>
+                <img src={publish} className="h-6" />
+              </button>
+            </div>
+            <label
+              htmlFor="formTitle"
+              className="block font-medium text-gray-700 mb-1"
+            >
+              Company / Project Name
+            </label>
             <input
-              type="color"
-              value={formSettings.backgroundColor}
-              onChange={(e) => updateBackgroundColor(e.target.value)}
-              className="w-12 h-10 p-1 rounded cursor-pointer"
+              type="text"
+              value={formMeta.title}
+              onChange={(e) => updateTitle(e.target.value)}
+              className="border border-gray-300 rounded-md p-3 w-full mb-3 
+                 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-blue-500"
             />
             <input
               type="text"
-              value={formSettings.backgroundColor}
-              onChange={(e) => updateBackgroundColor(e.target.value)}
-              className="w-28 border rounded px-2 py-1 text-sm font-mono"
-              placeholder="#ffffff"
+              value={formMeta.subtitle}
+              onChange={(e) => updateSubtitle(e.target.value)}
+              placeholder="Form Purpose (e.g., Job Application, Survey)"
+              className="border border-gray-300 rounded-md p-3 w-full mb-6 
+                 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-blue-500"
+              required
             />
+
+            <label className="block font-medium text-gray-700 mb-2">
+              Form Background Color:
+            </label>
+            <div className="flex items-center gap-2 mb-6">
+              <input
+                type="color"
+                value={formSettings.backgroundColor}
+                onChange={(e) => updateBackgroundColor(e.target.value)}
+                className="w-12 h-10 p-1 rounded cursor-pointer"
+              />
+              <input
+                type="text"
+                value={formSettings.backgroundColor}
+                onChange={(e) => updateBackgroundColor(e.target.value)}
+                className="w-28 border rounded px-2 py-1 text-sm font-mono"
+                placeholder="#ffffff"
+              />
+            </div>
+
+            <h2 className="text-lg font-semibold mb-3 text-gray-800">
+              Your Form
+            </h2>
+            <div className="space-y-3 flex-1">
+              <DndContext
+                collisionDetection={closestCenter}
+                onDragEnd={handleDragEnd}
+              >
+                <SortableContext
+                  items={fields.map((f) => f.id)}
+                  strategy={verticalListSortingStrategy}
+                >
+                  {fields.map((field) => (
+                    <SortableField key={field.id} id={field.id}>
+                      <div className="">
+                        <FieldItem
+                          field={field}
+                          onLabelChange={updateLabel}
+                          onOptionChange={updateOptions}
+                          onRemove={removeField}
+                          onToggleRequired={toggleRequired}
+                        />
+                      </div>
+                    </SortableField>
+                  ))}
+                </SortableContext>
+              </DndContext>
+            </div>
           </div>
 
-          <h2 className="text-lg font-semibold mb-3 text-gray-800">
-            Add Fields
-          </h2>
-          <div className="flex flex-wrap gap-2 mb-8">
-            {FIELD_TYPES.map((ft) => (
-              <button
-                key={ft.type}
-                onClick={() => addField(ft.type)}
-                className="
-  bg-gradient-to-br from-indigo-50 to-indigo-100 
-  text-indigo-700 border border-indigo-200 
-  px-3 py-2 rounded-lg text-sm font-medium
-  shadow-sm hover:shadow-md
-  hover:from-indigo-100 hover:to-indigo-200
-  active:scale-95 active:shadow-inner
-  transition-all duration-150 ease-out
-  cursor-pointer
-  select-none
-  "
-              >
-                {ft.label}
-              </button>
-            ))}
-          </div>
+          <div className="sticky bottom-0 px-4 left-0 right-0  bg-white mt-6">
+            <div className="pt-4 pb-4">
+              <h2 className="text-sm font-semibold text-gray-800 mb-3">
+                Add Fields
+              </h2>
 
-          <h2 className="text-lg font-semibold mb-3 text-gray-800">
-            Your Form
-          </h2>
-          <div className="space-y-3 flex-1">
-            <DndContext
-              collisionDetection={closestCenter}
-              onDragEnd={handleDragEnd}
-            >
-              <SortableContext
-                items={fields.map((f) => f.id)}
-                strategy={verticalListSortingStrategy}
-              >
-                {fields.map((field) => (
-                  <SortableField key={field.id} id={field.id}>
-                    <div className="">
-                      <FieldItem
-                        field={field}
-                        onLabelChange={updateLabel}
-                        onOptionChange={updateOptions}
-                        onRemove={removeField}
-                        onToggleRequired={toggleRequired}
-                      />
-                    </div>
-                  </SortableField>
+              <div className="flex flex-wrap gap-2 mb-4">
+                {FIELD_TYPES.map((ft) => (
+                  <button
+                    key={ft.type}
+                    onClick={() => addField(ft.type)}
+                    className="
+          bg-gradient-to-br from-indigo-50 to-indigo-100 
+          text-indigo-700 border border-indigo-200 
+          px-3 py-2 rounded-lg text-sm font-medium
+          shadow-sm hover:shadow-md
+          hover:from-indigo-100 hover:to-indigo-200
+          active:scale-95 active:shadow-inner
+          transition-all duration-150 ease-out
+          cursor-pointer select-none
+          "
+                  >
+                    {ft.label}
+                  </button>
                 ))}
-              </SortableContext>
-            </DndContext>
-          </div>
-
-          {/* Fixed Sticky Action Buttons */}
-          <div className="mt-6 sticky bottom-0 bg-white py-4 border-t border-gray-200 flex gap-3 ">
-            {/* <button
-        onClick={() => onSave(fields)}
-        className="flex-1 bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-md shadow-md transition"
-      >
-        Save Form
-      </button> */}
-            <button
-              onClick={handlePublish}
-              className="flex-1 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md shadow-md transition"
-            >
-              Publish Form
-            </button>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* 🔹 Right: Live Preview with vertical scroll */}
         <div
           style={{ backgroundColor: formSettings.backgroundColor }}
-          className="p-7 shadow-inner border border-gray-200 max-h-[100vh] overflow-y-auto justify-center"
+          className="p-7 shadow-inner border border-gray-200 max-h-[90vh] overflow-y-auto justify-center"
         >
           <div className="flex items-center justify-center">
             <div className="w-full max-w-xl bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
@@ -286,15 +291,17 @@ export default function FormBuilder({
 
                     {f.type === "checkbox_group" && (
                       <fieldset>
-                        <legend className="font-medium text-gray-700 mb-1"></legend>
                         {f.options?.map((opt, idx) => (
-                          <label key={idx} className="block text-gray-700">
+                          <label
+                            key={idx}
+                            className="flex items-center space-x-2 text-gray-700"
+                          >
                             <input
                               type="checkbox"
-                              className="mr-2 accent-indigo-500"
+                              className="w-5 h-5 accent-indigo-500"
                               required={f.required}
-                            />{" "}
-                            {opt}
+                            />
+                            <span>{opt}</span>
                           </label>
                         ))}
                       </fieldset>
@@ -317,7 +324,6 @@ export default function FormBuilder({
 
                     {f.type === "select" && (
                       <div className="relative" ref={dropdownRef}>
-                        {/* selected box */}
                         <div
                           onClick={() =>
                             setOpenDropdown(openDropdown === f.id ? null : f.id)
@@ -340,7 +346,6 @@ export default function FormBuilder({
                             {values[f.id] || "Select option"}
                           </span>
 
-                          {/* arrow */}
                           <svg
                             className={`w-5 h-5 text-gray-400 transition-transform ${
                               openDropdown === f.id ? "rotate-180" : ""
@@ -358,7 +363,6 @@ export default function FormBuilder({
                           </svg>
                         </div>
 
-                        {/* dropdown list */}
                         {openDropdown === f.id && (
                           <div
                             className="

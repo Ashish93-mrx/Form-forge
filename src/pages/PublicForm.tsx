@@ -100,11 +100,10 @@ export default function PublicForm() {
 
             {/* Title */}
             <div className="flex flex-row justify-center gap-1 items-center">
-
-            <h2 className="text-3xl font-semibold text-gray-900 tracking-tight mb-3">
-              Submission received
-            </h2>
-            <img src={success} className="h-8 w-8" />
+              <h2 className="text-3xl font-semibold text-gray-900 tracking-tight mb-3">
+                Submission received
+              </h2>
+              <img src={success} className="h-8 w-8" />
             </div>
 
             {/* Subtitle */}

@@ -16,8 +16,8 @@ export default function CreateFormPage() {
           
           return;
         }
-        const id = await createForm(user.uid, fields, settings, meta);
-        toast.success(`Form created! Public link: ${window.location.origin}/form/${id}`);
+        await createForm(user.uid, fields, settings, meta);
+        toast.success(`Form created successfully!`);
         navigate("/dashboard"); 
       }}
     />

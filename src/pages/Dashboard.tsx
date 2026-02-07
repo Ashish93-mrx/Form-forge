@@ -53,11 +53,8 @@ export default function Dashboard() {
   return (
     <div className="p-6 border-t font-Mont min-h-screen">
       <div className="rounded-xl p-6 bg-gradient-to-r from-blue-100 via-indigo-200 to-cyan-200 shadow-md">
-        {/* Card content */}
-
         <h1 className="text-2xl font-bold mb-6">Dashboard</h1>
 
-        {/* Create Form Button */}
         <Link
           to="/form/create"
           className="group relative inline-flex items-center justify-center px-5 py-3 
@@ -69,7 +66,6 @@ export default function Dashboard() {
           <span className="mr-2 text-lg">+</span>
           <span>Create New Form</span>
 
-          {/* Shine / ripple effect */}
           <span
             className="absolute inset-0 rounded-lg bg-white/20 opacity-0 
                group-hover:opacity-100 transition duration-300"
@@ -82,7 +78,6 @@ export default function Dashboard() {
           Your Forms
         </h2>
 
-        {/* Loading shimmer */}
         {loading ? (
           <div
             className="grid gap-6 md:grid-cols-2 lg:grid-cols-4"
@@ -96,42 +91,35 @@ export default function Dashboard() {
             ))}
           </div>
         ) : forms.length === 0 ? (
-<div className="flex flex-col items-center justify-center text-center bg-gradient-to-br from-white to-indigo-50 border border-dashed border-indigo-200 rounded-2xl py-14 px-6 shadow-sm">
-  
-  {/* Icon circle */}
-  <div className="w-16 h-16 flex items-center justify-center rounded-full bg-indigo-100 text-indigo-600 text-3xl mb-4 shadow-inner">
-    📝
-  </div>
+          <div className="flex flex-col items-center justify-center text-center bg-gradient-to-br from-white to-indigo-50 border border-dashed border-indigo-200 rounded-2xl py-14 px-6 shadow-sm">
+            <div className="w-16 h-16 flex items-center justify-center rounded-full bg-indigo-100 text-indigo-600 text-3xl mb-4 shadow-inner">
+              📝
+            </div>
 
-  {/* Title */}
-  <h3 className="text-xl font-semibold text-gray-800 mb-2">
-    No forms yet
-  </h3>
+            <h3 className="text-xl font-semibold text-gray-800 mb-2">
+              No forms yet
+            </h3>
 
-  {/* Subtitle */}
-  <p className="text-gray-500 max-w-sm mb-6">
-    You haven’t created any forms yet. Start building beautiful forms and
-    collecting responses in seconds.
-  </p>
+            <p className="text-gray-500 max-w-sm mb-6">
+              You haven’t created any forms yet. Start building beautiful forms
+              and collecting responses in seconds.
+            </p>
 
-  {/* CTA button */}
-  <Link
-    to="/form/create"
-    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl 
+            <Link
+              to="/form/create"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl 
     bg-gradient-to-r from-indigo-600 to-blue-600 text-white font-medium
     shadow-md hover:shadow-lg hover:from-indigo-700 hover:to-blue-700 
     active:scale-95 transition-all duration-200"
-  >
-    <span className="text-lg">＋</span>
-    Create your first form
-  </Link>
+            >
+              <span className="text-lg">＋</span>
+              Create your first form
+            </Link>
 
-  {/* small helper text */}
-  <p className="text-xs text-gray-400 mt-4">
-    Takes less than 30 seconds ✨
-  </p>
-</div>
-
+            <p className="text-xs text-gray-400 mt-4">
+              Takes less than 30 seconds ✨
+            </p>
+          </div>
         ) : (
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {forms.map((form) => (
@@ -139,7 +127,6 @@ export default function Dashboard() {
                 key={form.id}
                 className="bg-white border border-gray-200 shadow-sm hover:shadow-lg transition rounded-xl p-5 flex flex-col justify-between"
               >
-                {/* Form Info */}
                 <div>
                   <h3 className="text-lg font-semibold text-gray-800">
                     {form.title}
@@ -157,8 +144,7 @@ export default function Dashboard() {
                   </a>
                 </div>
 
-                {/* Dropdown for actions */}
-                <div className="mt-4 flex justify-between">
+                <div className="mt-4 flex items-center justify-between">
                   <div className="px-4 py-2 bg-indigo-600 text-white rounded-md text-sm font-medium shadow-sm hover:bg-indigo-700 transition">
                     <Link to={`/responses/${form.id}`}>View Responses</Link>
                   </div>
@@ -173,7 +159,6 @@ export default function Dashboard() {
 
                     <Menu.Items className="absolute right-0 mt-2 w-44 origin-top-right bg-white border border-gray-100 rounded-lg shadow-lg ring-1 ring-opacity-5 focus:outline-none z-10">
                       <div className="">
-                        {/* EDIT */}
                         <Menu.Item>
                           {({ active }: { active: boolean }) => (
                             <Link
@@ -189,7 +174,6 @@ export default function Dashboard() {
                           )}
                         </Menu.Item>
 
-                        {/* EXPORT */}
                         <Menu.Item>
                           {({ active }: { active: boolean }) => (
                             <button
@@ -207,7 +191,6 @@ export default function Dashboard() {
                           )}
                         </Menu.Item>
 
-                        {/* DELETE */}
                         <Menu.Item>
                           {({ active }: { active: boolean }) => (
                             <button
@@ -227,16 +210,13 @@ export default function Dashboard() {
                     </Menu.Items>
                   </Menu>
 
-                  {/* 🔴 Delete Confirmation Modal */}
                   {deleteId && (
                     <div className="fixed inset-0 z-50 flex items-center justify-center">
-                      {/* backdrop */}
                       <div
                         className="absolute inset-0 bg-black/40 backdrop-blur-sm"
                         onClick={() => setDeleteId(null)}
                       />
 
-                      {/* modal */}
                       <div className="relative bg-white rounded-2xl shadow-2xl w-[90%] max-w-md p-6 animate-[fadeIn_.2s_ease]">
                         <div className="flex items-center gap-3 mb-4">
                           <div className="w-10 h-10 flex items-center justify-center rounded-full bg-red-100">
