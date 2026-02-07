@@ -56,6 +56,15 @@ export default function FormBuilder({
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [values, setValues] = useState<Record<string, string>>({});
   const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const bottomRef = useRef<HTMLDivElement | null>(null);
+  const scrollToBottom = () => {
+    setTimeout(() => {
+      bottomRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+      });
+    }, 120);
+  };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -208,7 +217,10 @@ export default function FormBuilder({
                 {FIELD_TYPES.map((ft) => (
                   <button
                     key={ft.type}
-                    onClick={() => addField(ft.type)}
+                    onClick={() => {
+                      addField(ft.type);
+                      scrollToBottom();
+                    }}
                     className="
           bg-gradient-to-br from-indigo-50 to-indigo-100 
           text-indigo-700 border border-indigo-200 
@@ -226,6 +238,7 @@ export default function FormBuilder({
               </div>
             </div>
           </div>
+          <div ref={bottomRef} />
         </div>
 
         <div
