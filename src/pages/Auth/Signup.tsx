@@ -13,6 +13,7 @@ export default function Signup() {
   const navigate = useNavigate();
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [loading, setLoading] = useState(false);
   const { user } = useAuth();
 
   useEffect(() => {
@@ -50,22 +51,24 @@ export default function Signup() {
 
     if (hasError) return;
 
+    setLoading(true);
+
     try {
       await signup(email, password);
       navigate("/dashboard");
     } catch (err: any) {
       setError(err.message || "Signup failed. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="flex min-h-screen bg-gradient-to-b from-indigo-200 via-indigo-50 to-white">
-      {/* Right side - Illustration */}
       <div className="hidden md:flex w-1/2 items-center justify-center bg-white">
         <img src={signUp} alt="Login illustration" className="w-full h-auto" />
       </div>
 
-      {/* Left side - Form */}
       <div className="flex justify-center items-center w-full md:w-1/2 px-4">
         <div className="bg-white shadow-xl p-8 w-full max-w-md rounded-lg">
           <h1 className="text-3xl font-bold mb-6 text-center font-cinzel text-gray-800">
@@ -84,7 +87,6 @@ export default function Signup() {
           )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
-            {/* EMAIL */}
             <div>
               <label className="block text-sm mb-1 font-mono text-gray-600">
                 Email
@@ -117,7 +119,6 @@ export default function Signup() {
               )}
             </div>
 
-            {/* PASSWORD */}
             <div className="relative">
               <label className="block text-sm mb-1 font-mono text-gray-600">
                 Password
@@ -164,9 +165,16 @@ export default function Signup() {
 
             <button
               type="submit"
-              className="w-full cursor-pointer bg-blue-600 text-white py-3 rounded-md font-semibold hover:bg-blue-700 transition"
+              disabled={loading}
+              className={`w-full py-3 rounded-md font-semibold text-white transition
+  ${
+    loading
+      ? "bg-gray-400 cursor-not-allowed"
+      : "bg-blue-600 hover:bg-blue-700 cursor-pointer"
+  }
+  `}
             >
-              Sign up
+              {loading ? "Signing Up..." : "Sign Up"}
             </button>
           </form>
 

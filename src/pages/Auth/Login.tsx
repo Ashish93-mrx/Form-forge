@@ -10,6 +10,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { user } = useAuth();
 
@@ -21,15 +22,18 @@ export default function Login() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     setError("");
 
     if (!email.trim() || !password.trim()) {
       setError("Please enter both email and password.");
+      setLoading(false);
       return;
     }
 
     try {
       await login(email, password);
+       setLoading(false);
       navigate("/dashboard");
     } catch (err: any) {
       let message = "Login failed. Please try again.";
@@ -49,6 +53,7 @@ export default function Login() {
           break;
       }
       setError(message);
+      setLoading(false);
     }
   };
 
@@ -114,9 +119,11 @@ export default function Login() {
 
             <button
               type="submit"
-              className="w-full cursor-pointer bg-blue-600 text-white py-3 rounded-md font-semibold hover:bg-blue-700"
+              disabled={loading}
+              className={`w-full py-3 rounded-md font-semibold 
+              ${loading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700 cursor-pointer"} text-white`}
             >
-              Login
+              {(!loading) ? 'Login' : 'Loading...'}
             </button>
           </form>
 
