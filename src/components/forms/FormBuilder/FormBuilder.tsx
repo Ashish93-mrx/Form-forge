@@ -8,7 +8,8 @@ import { useFormBuilder } from "./useFormBuilder";
 import FieldItem from "./FieldItem";
 import SortableField from "./SortableField";
 import { useEffect, useRef, useState } from "react";
-import { publish } from "../../../assets";
+import { back, publish } from "../../../assets";
+import { useNavigate } from "react-router-dom";
 
 const FIELD_TYPES = [
   { type: "short_text" as const, label: "Short Text" },
@@ -57,6 +58,7 @@ export default function FormBuilder({
   const [values, setValues] = useState<Record<string, string>>({});
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const bottomRef = useRef<HTMLDivElement | null>(null);
+  const navigate = useNavigate();
   const scrollToBottom = () => {
     setTimeout(() => {
       bottomRef.current?.scrollIntoView({
@@ -117,6 +119,8 @@ export default function FormBuilder({
              hover:scrollbar-thumb-gray-500"
         >
           <div className="px-6 pt-4">
+            <button onClick={()=>navigate('/dashboard')} className="flex items-center justify-between gap-2 cursor-pointer"><img src={back} className="h-4" alt="back icon"/><span>Back</span></button>
+            <hr className="pt-3 pb-3"/>
             <div className="grid grid-cols-3 pb-4">
               <h2 className="col-span-2 text-lg font-semibold mb-3 text-gray-800">
                 Form Settings
