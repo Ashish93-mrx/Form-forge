@@ -7,6 +7,7 @@ import back from "./images/back.png";
 import close from "./images/close.png";
 import success from "./images/success.png";
 import publish from "./images/publish.png";
+import link from "./images/link.png"
 
 
-export { fast, insight, internet, dots, delete2, back, close, success, publish };
+export { fast, insight, internet, dots, delete2, back, close, success, publish, link };

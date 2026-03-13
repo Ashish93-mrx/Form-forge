@@ -5,8 +5,8 @@ import { getDocs, collection, query, where } from "firebase/firestore";
 import { db } from "../firebase";
 import { getFormResponses, deleteForm } from "../services/firestoreService";
 import { useCSVExport } from "../hooks/useCSVExport";
-import { Menu } from "@headlessui/react"; // Dropdown component
-import { delete2, dots } from "../assets";
+import { Menu } from "@headlessui/react"; 
+import { delete2, dots, link } from "../assets";
 
 export default function Dashboard() {
   const { user } = useAuth();
@@ -131,7 +131,7 @@ export default function Dashboard() {
                   <h3 className="text-lg font-semibold text-gray-800">
                     {form.title}
                   </h3>
-                  <p className="text-sm text-gray-500 mb-3 line-clamp-2">
+                  <p className="text-sm text-gray-500 font-[100] my-3 line-clamp-2">
                     {form.subtitle || " "}
                   </p>
                   <a
@@ -140,7 +140,7 @@ export default function Dashboard() {
                     rel="noopener noreferrer"
                     className="inline-block text-indigo-600 hover:text-indigo-800 text-sm font-medium transition"
                   >
-                    🔗 Public Link
+                    <div className="flex gap-1 items-center"><img className="h-4" src={link} />Public Link</div>
                   </a>
                 </div>
 
