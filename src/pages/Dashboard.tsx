@@ -83,10 +83,10 @@ export default function Dashboard() {
             className="grid gap-6 md:grid-cols-2 lg:grid-cols-4"
             role="status"
           >
-            {[1, 2, 3].map((n) => (
+            {[1, 2, 3, 4].map((n) => (
               <div
                 key={n}
-                className="animate-pulse bg-gray-200 h-32 rounded-lg  p-5"
+                className="animate-pulse bg-gray-200 h-52 rounded-lg  p-5"
               ></div>
             ))}
           </div>
@@ -131,7 +131,7 @@ export default function Dashboard() {
                   <h3 className="text-lg font-semibold text-gray-800">
                     {form.title}
                   </h3>
-                  <p className="text-sm text-gray-500 font-[100] my-3 line-clamp-2">
+                  <p className="text-sm h-10 text-gray-500 font-[100] my-3 line-clamp-2">
                     {form.subtitle || " "}
                   </p>
                   <a
