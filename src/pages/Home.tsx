@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import formPreview from "../../public/images/formforgepost.png";
 import { fast, insight, internet } from "../assets/index";
+import Footer from "../components/layout/Footer";
 
 export default function Home() {
   return (
@@ -164,24 +165,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-gray-400 py-8 mt-auto">
-        <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-sm">
-            &copy; {new Date().getFullYear()} FormFroge. All rights reserved.
-          </p>
-          <div className="space-x-6 text-sm">
-            <a href="#" className="hover:text-white transition">
-              Privacy
-            </a>
-            <a href="#" className="hover:text-white transition">
-              Terms
-            </a>
-            <a href="#" className="hover:text-white transition">
-              Contact
-            </a>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
