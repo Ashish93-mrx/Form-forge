@@ -283,15 +283,15 @@ export default function Home() {
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              { name: "Free", price: "$0", features: ["Up to 10 forms", "100 responses/month", "Basic branding", "Email support"], color: "emerald" },
-              { name: "Pro", price: "$29", features: ["Unlimited forms", "50K responses/month", "Custom branding", "Priority support", "Advanced analytics"], highlighted: true, color: "blue" },
-              { name: "Enterprise", price: "Custom", features: ["Everything in Pro", "Unlimited responses", "Dedicated account manager", "Custom integrations", "SLA support"], color: "orange" }
+              { name: "Free", price: "$0", features: ["Up to 10 forms", "100 responses/month", "Basic branding", "Email support"], color: "emerald" as const },
+              { name: "Pro", price: "$29", features: ["Unlimited forms", "50K responses/month", "Custom branding", "Priority support", "Advanced analytics"], highlighted: true, color: "blue" as const },
+              { name: "Enterprise", price: "Custom", features: ["Everything in Pro", "Unlimited responses", "Dedicated account manager", "Custom integrations", "SLA support"], color: "orange" as const }
             ].map((plan, idx) => {
               const colorMap = {
                 emerald: { border: "border-emerald-600", bg: "bg-emerald-50", ring: "ring-emerald-400", text: "text-emerald-600", button: "bg-emerald-600 hover:bg-emerald-700" },
                 blue: { border: "border-blue-600", bg: "bg-blue-50", ring: "ring-blue-400", text: "text-blue-600", button: "bg-blue-600 hover:bg-blue-700" },
                 orange: { border: "border-orange-600", bg: "bg-orange-50", ring: "ring-orange-400", text: "text-orange-600", button: "bg-orange-600 hover:bg-orange-700" }
-              };
+              } as const;
               const colors = colorMap[plan.color];
               
               return (
