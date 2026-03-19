@@ -240,7 +240,7 @@ export default function Footer() {
             <p className="text-xs text-gray-400 mb-4">
               Get the latest features, updates, and tips delivered to your inbox.
             </p>
-            <form className="flex gap-2">
+            <form onSubmit={(e)=>e.preventDefault()} className="flex gap-2">
               <input
                 type="email"
                 placeholder="your@email.com"
@@ -248,7 +248,7 @@ export default function Footer() {
               />
               <button
                 type="submit"
-                className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded transition duration-200"
+                className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded transition duration-200 cursor-pointer"
               >
                 Subscribe
               </button>
@@ -279,7 +279,7 @@ export default function Footer() {
 
             <button
               onClick={scrollToTop}
-              className="text-xs text-gray-400 hover:text-indigo-400 transition"
+              className="text-xs text-gray-400 hover:text-indigo-400 transition cursor-pointer"
               aria-label="Back to top"
             >
               ↑ Back to top
