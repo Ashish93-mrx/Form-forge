@@ -30,9 +30,15 @@
   --font-Mont: Montserrat, serif;
 }
 
-@keyframes shimmer {
-  100% {
-    transform: translateX(180%);
+@layer utilities {
+  @keyframes shimmer {
+    100% {
+      transform: translateX(180%);
+    }
+  }
+  
+  .animate-shimmer {
+    animation: shimmer 3s infinite;
   }
 }
 
