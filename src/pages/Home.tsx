@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import formPreview from "../../public/images/formforgepost.png";
 import { fast, insight, internet } from "../assets/index";
 import Footer from "../components/layout/Footer";
 
 export default function Home() {
+  const [selectedPlan, setSelectedPlan] = useState(1);
   return (
     <div className="flex flex-col min-h-screen bg-gray-50 text-gray-800">
       
@@ -281,25 +283,49 @@ export default function Home() {
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              { name: "Free", price: "$0", features: ["Up to 10 forms", "100 responses/month", "Basic branding", "Email support"] },
-              { name: "Pro", price: "$29", features: ["Unlimited forms", "50K responses/month", "Custom branding", "Priority support", "Advanced analytics"], highlighted: true },
-              { name: "Enterprise", price: "Custom", features: ["Everything in Pro", "Unlimited responses", "Dedicated account manager", "Custom integrations", "SLA support"] }
-            ].map((plan, idx) => (
-              <div key={idx} className={`rounded-lg p-8 border transition ${plan.highlighted ? "border-indigo-600 bg-indigo-50 shadow-lg ring-2 ring-indigo-200" : "border-gray-200 bg-white"}`}>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">{plan.name}</h3>
-                <p className="text-3xl font-bold text-indigo-600 mb-6">{plan.price}</p>
-                <ul className="space-y-3 mb-8">
-                  {plan.features.map((feature, i) => (
-                    <li key={i} className="flex items-center gap-2 text-sm text-gray-600 font-mono">
-                      <span className="text-indigo-600">✓</span> {feature}
-                    </li>
-                  ))}
-                </ul>
-                <button className={`w-full py-2 rounded-lg font-semibold transition ${plan.highlighted ? "bg-indigo-600 text-white hover:bg-indigo-700" : "border border-gray-300 text-gray-900 hover:bg-gray-50"}`}>
-                  Get Started
-                </button>
-              </div>
-            ))}
+              { name: "Free", price: "$0", features: ["Up to 10 forms", "100 responses/month", "Basic branding", "Email support"], color: "emerald" },
+              { name: "Pro", price: "$29", features: ["Unlimited forms", "50K responses/month", "Custom branding", "Priority support", "Advanced analytics"], highlighted: true, color: "blue" },
+              { name: "Enterprise", price: "Custom", features: ["Everything in Pro", "Unlimited responses", "Dedicated account manager", "Custom integrations", "SLA support"], color: "orange" }
+            ].map((plan, idx) => {
+              const colorMap = {
+                emerald: { border: "border-emerald-600", bg: "bg-emerald-50", ring: "ring-emerald-400", text: "text-emerald-600", button: "bg-emerald-600 hover:bg-emerald-700" },
+                blue: { border: "border-blue-600", bg: "bg-blue-50", ring: "ring-blue-400", text: "text-blue-600", button: "bg-blue-600 hover:bg-blue-700" },
+                orange: { border: "border-orange-600", bg: "bg-orange-50", ring: "ring-orange-400", text: "text-orange-600", button: "bg-orange-600 hover:bg-orange-700" }
+              };
+              const colors = colorMap[plan.color];
+              
+              return (
+                <div 
+                  key={idx} 
+                  onClick={() => setSelectedPlan(idx)}
+                  className={`rounded-lg p-8 border transition cursor-pointer ${
+                    selectedPlan === idx 
+                      ? `${colors.border} ${colors.bg} shadow-lg ring-2 ${colors.ring} transform scale-105` 
+                      : plan.highlighted 
+                      ? `${colors.border} ${colors.bg} shadow-lg ring-2 ${colors.ring}`
+                      : "border-gray-200 bg-white hover:shadow-lg hover:border-gray-300"
+                  }`}>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">{plan.name}</h3>
+                  <p className={`text-3xl font-bold ${colors.text} mb-6`}>{plan.price}</p>
+                  <ul className="space-y-3 mb-8">
+                    {plan.features.map((feature, i) => (
+                      <li key={i} className={`flex items-center gap-2 text-sm text-gray-600 font-mono`}>
+                        <span className={colors.text}>✓</span> {feature}
+                      </li>
+                    ))}
+                  </ul>
+                  <button className={`w-full py-2 rounded-lg font-semibold transition text-white ${
+                    selectedPlan === idx
+                      ? `${colors.button} shadow-md`
+                      : plan.highlighted 
+                      ? colors.button
+                      : "border border-gray-300 text-gray-900 hover:bg-gray-50"
+                  }`}>
+                    Get Started
+                  </button>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
