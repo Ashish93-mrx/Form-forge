@@ -43,7 +43,7 @@ export default function Home() {
         </div>
       </header>
 
-      <section className="flex-1 py-16 bg-gray-50">
+      <section className="flex-1 py-16 bg-white border-b border-gray-200">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid gap-8 md:grid-cols-3">
             {/* Card 1 */}

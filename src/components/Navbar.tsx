@@ -11,15 +11,25 @@ export default function Navbar() {
         FormForge
       </Link>
 
-      <div className="space-x-4">
+      <div className="flex items-center space-x-4 my-2">
         {user ? (
           <>
-          {location.pathname !== "/dashboard" && (
-            <Link to="/dashboard">Dashboard</Link>
+            {location.pathname !== "/dashboard" && (
+              <Link to="/dashboard" className="hover:text-gray-300 transition">
+                Dashboard
+              </Link>
+            )}
+            {location.pathname !== "/form/create" && (
+              <Link
+                to="/form/create"
+                className="bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 px-4 py-1 rounded-lg font-semibold transition shadow-lg"
+              >
+                + Create Form
+              </Link>
             )}
             <button
               onClick={logout}
-              className="bg-red-500 cursor-pointer px-3 py-1 rounded"
+              className="bg-red-500 hover:bg-red-600 cursor-pointer px-3 py-1 rounded transition"
             >
               Logout
             </button>
@@ -27,10 +37,14 @@ export default function Navbar() {
         ) : (
           <>
             {location.pathname !== "/login" && (
-              <Link to="/login">Login</Link>
+              <Link to="/login" className="hover:text-gray-300 transition">
+                Login
+              </Link>
             )}
             {location.pathname !== "/signup" && (
-              <Link to="/signup">Signup</Link>
+              <Link to="/signup" className="hover:text-gray-300 transition">
+                Signup
+              </Link>
             )}
           </>
         )}
