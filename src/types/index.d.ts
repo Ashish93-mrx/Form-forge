@@ -2,12 +2,17 @@ export type FieldType =
   | "short_text"
   | "long_text"
   | "email"
+  | "phone"
+  | "url"
+  | "password"
   | "checkbox_group"
   | "radio_group"
   | "boolean"
   | "select"
   | "date"
-  | "number";
+  | "time"
+  | "number"
+  | "file";
 
 export interface FormField {
   id: string;

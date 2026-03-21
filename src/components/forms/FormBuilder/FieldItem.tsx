@@ -1,5 +1,6 @@
 import { close } from "../../../assets";
-import { type FormField } from "./useFormBuilder";
+import type { FormField } from "../../../types";
+// import { type FormField } from "./useFormBuilder";
 
 interface Props {
   field: FormField;
