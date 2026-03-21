@@ -10,29 +10,24 @@ import SortableField from "./SortableField";
 import { useEffect, useRef, useState } from "react";
 import { back, publish } from "../../../assets";
 import { useNavigate } from "react-router-dom";
+import type { FormBuilderProps } from "../../../types/FormBuilder";
 
 const FIELD_TYPES = [
   { type: "short_text" as const, label: "Short Text" },
   { type: "long_text" as const, label: "Paragraph" },
   { type: "email" as const, label: "Email" },
+  { type: "phone" as const, label: "Phone" },
+  { type: "url" as const, label: "URL" },
+  { type: "password" as const, label: "Password" },
   { type: "checkbox_group" as const, label: "Checkboxes" },
   { type: "radio_group" as const, label: "Multiple Choice" },
   { type: "boolean" as const, label: "Yes/No" },
   { type: "select" as const, label: "Dropdown" },
   { type: "date" as const, label: "Date" },
+  { type: "time" as const, label: "Time" },
   { type: "number" as const, label: "Number" },
+  { type: "file" as const, label: "File Upload" },
 ];
-
-type FormBuilderProps = {
-  initialFields?: any[];
-  initialSettings?: any;
-  initialMeta?: { title: string; subtitle: string };
-  onSave: (
-    fields: any[],
-    settings: any,
-    meta: { title: string; subtitle: string },
-  ) => void;
-};
 
 export default function FormBuilder({
   onSave,
@@ -300,6 +295,48 @@ export default function FormBuilder({
                     {f.type === "number" && (
                       <input
                         type="number"
+                        className="border border-gray-300 rounded-md p-3 w-full 
+                                 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-indigo-500"
+                        required={f.required}
+                      />
+                    )}
+                    {f.type === "phone" && (
+                      <input
+                        type="tel"
+                        placeholder="+1 (555) 000-0000"
+                        className="border border-gray-300 rounded-md p-3 w-full 
+                                 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-indigo-500"
+                        required={f.required}
+                      />
+                    )}
+                    {f.type === "url" && (
+                      <input
+                        type="url"
+                        placeholder="https://example.com"
+                        className="border border-gray-300 rounded-md p-3 w-full 
+                                 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-indigo-500"
+                        required={f.required}
+                      />
+                    )}
+                    {f.type === "password" && (
+                      <input
+                        type="password"
+                        className="border border-gray-300 rounded-md p-3 w-full 
+                                 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-indigo-500"
+                        required={f.required}
+                      />
+                    )}
+                    {f.type === "time" && (
+                      <input
+                        type="time"
+                        className="border border-gray-300 rounded-md p-3 w-full 
+                                 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-indigo-500"
+                        required={f.required}
+                      />
+                    )}
+                    {f.type === "file" && (
+                      <input
+                        type="file"
                         className="border border-gray-300 rounded-md p-3 w-full 
                                  focus:outline-none focus:border-transparent focus:ring-2 focus:ring-indigo-500"
                         required={f.required}

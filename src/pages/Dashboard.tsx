@@ -73,7 +73,7 @@ export default function Dashboard() {
           ></span>
         </Link>
       </div>
-      <div className=" bg-gradient-to-b from-indigo-200 via-white p-5 mt-4">
+      <div className=" bg-indigo-100 p-5 mt-4 rounded-lg">
         <h2 className="text-xl font-semibold mb-4 mt-4 text-gray-800">
           Your Forms
         </h2>

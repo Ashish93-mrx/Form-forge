@@ -194,6 +194,53 @@ export default function PublicForm() {
                            focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                 />
               )}
+              {f.type === "phone" && (
+                <input
+                  name={f.id}
+                  type="tel"
+                  placeholder="+1 (555) 000-0000"
+                  required={f.required}
+                  className="border border-gray-300 rounded-lg p-3 w-full 
+                           focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                />
+              )}
+              {f.type === "url" && (
+                <input
+                  name={f.id}
+                  type="url"
+                  placeholder="https://example.com"
+                  required={f.required}
+                  className="border border-gray-300 rounded-lg p-3 w-full 
+                           focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                />
+              )}
+              {f.type === "password" && (
+                <input
+                  name={f.id}
+                  type="password"
+                  required={f.required}
+                  className="border border-gray-300 rounded-lg p-3 w-full 
+                           focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                />
+              )}
+              {f.type === "time" && (
+                <input
+                  name={f.id}
+                  type="time"
+                  required={f.required}
+                  className="border border-gray-300 rounded-lg p-3 w-full 
+                           focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                />
+              )}
+              {f.type === "file" && (
+                <input
+                  name={f.id}
+                  type="file"
+                  required={f.required}
+                  className="border border-gray-300 rounded-lg p-3 w-full 
+                           focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              )}
               {f.type === "boolean" && (
                 <label className="flex items-center space-x-2 text-gray-700">
                   <input

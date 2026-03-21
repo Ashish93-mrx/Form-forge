@@ -1,16 +1,6 @@
 import { useState } from "react";
 import { nanoid } from "nanoid";
-
-export type FieldType =
-  | "short_text"
-  | "long_text"
-  | "email"
-  | "checkbox_group"
-  | "radio_group"
-  | "boolean"
-  | "select"
-  | "date"
-  | "number";
+import type { FieldType, FormField } from "../../../types";
 
 // export type FormField = {
 //   id: string;
@@ -21,13 +11,6 @@ export type FieldType =
 // };
 
 
-export interface FormField {
-  id: string;
-  label: string;
-  type: FieldType;
-  required: boolean;
-  options?: string[];
-}
 
 export interface FormSettings {
   backgroundColor: string;
