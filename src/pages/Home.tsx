@@ -7,20 +7,22 @@ import Footer from "../components/layout/Footer";
 export default function Home() {
   const [selectedPlan, setSelectedPlan] = useState(1);
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50 text-gray-800">
+    <div className="flex flex-col min-h-screen text-gray-800">
       
-      <header className="relative bg-gradient-to-br from-indigo-600 via-indigo-500 to-violet-600 text-white">
+      <header className="relative bg-[linear-gradient(90deg,#FFF9D6,#D6FAFF,#D6FFF0)]">
        
-        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-black/10" />
+        <div className="absolute inset-0 " />
 
         <div className="relative max-w-7xl mx-auto px-6 py-24 text-center">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl leading-tight mb-6 font-cinzel">
             Build Forms Effortlessly with{" "}
-            <span className="bg-gradient-to-r from-yellow-300 to-yellow-400 bg-clip-text text-transparent">
-              FormFroge
-            </span>
+            <span className="border-2 border-orange-400">
+            <span className="text-orange-400 bg-clip-text">
+              Form</span><span className="bg-white text-black">Froge</span>
+              </span>
+            
           </h1>
-          <p className="text-lg sm:text-xl text-gray-100 mb-10 max-w-2xl mx-auto font-mono">
+          <p className="text-lg sm:text-xl mb-10 max-w-2xl mx-auto font-mono">
             Create, share, and collect responses in minutes. No coding required.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
@@ -35,7 +37,7 @@ export default function Home() {
 
             <Link
               to="/signup"
-              className="px-6 py-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg text-white hover:bg-white/20 transition duration-200"
+              className="px-6 py-3 bg-white/40 backdrop-blur-md border border-white/20 rounded-lg text-black hover:bg-white/20 shadow transition duration-200"
             >
               Sign up
             </Link>
@@ -162,7 +164,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="py-20 bg-gradient-to-t from-indigo-200 via-white border-t to-indigo-100 border-gray-200">
+      <section className="py-20 bg-gradient-to-t from-indigo-100 via-white border-t to-indigo-100 border-gray-200">
         <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-14 items-center">
           <div>
             <h2 className="text-3xl sm:text-4xl font-bold mb-6  font-cinzel">
