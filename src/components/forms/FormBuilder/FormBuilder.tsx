@@ -106,34 +106,30 @@ export default function FormBuilder({
 
   return (
     <div className="bg-gray-150 p-2">
-      <div className="grid font-Mont grid-cols-1 md:grid-cols-[40%_60%] gap-1">
+      <div className="grid font-Mont h-screen grid-cols-1 md:grid-cols-[40%_60%] gap-1">
         <div
           className="bg-white shadow-md rounded-lg pt-2 border border-gray-200 
-             max-h-[90vh] overflow-y-auto flex flex-col
+             max-h-[90vh] h-screen overflow-y-auto flex flex-col
              scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 
              hover:scrollbar-thumb-gray-500"
         >
           <div className="px-6 pt-4">
-            <button onClick={()=>navigate('/dashboard')} className="flex items-center justify-between gap-2 cursor-pointer"><img src={back} className="h-4" alt="back icon"/><span>Back</span></button>
-            <hr className="pt-3 pb-3"/>
-            <div className="grid grid-cols-3 pb-4">
-              <h2 className="col-span-2 text-lg font-semibold mb-3 text-gray-800">
-                Form Settings
-              </h2>
+            <div>
+              <div className="flex flex-row items-center justify-between pb-4">
+                <h2 className="text-lg font-semibold text-gray-800">
+                  Form Settings
+                </h2>
               <button
-                onClick={handlePublish}
-                className=" col-span-1
-      w-full bg-green-600 hover:bg-green-700
-      text-white font-medium
-      px-4 py-3 rounded-xl
-      shadow-md hover:shadow-lg
-      transition cursor-pointer flex justify-around
-      "
+                onClick={() => navigate("/dashboard")}
+                className="flex items-center gap-2 cursor-pointer"
               >
-                <span>Publish Form</span>
-                <img src={publish} className="h-6" />
+                <img src={back} className="h-4" alt="back icon" />
+                <span>Back</span>
               </button>
+              </div>
             </div>
+            <hr className="pt-3 pb-3" />
+
             <label
               htmlFor="formTitle"
               className="block font-medium text-gray-700 mb-1"
@@ -240,149 +236,172 @@ export default function FormBuilder({
           <div ref={bottomRef} />
         </div>
 
-        <div
-          style={{ backgroundColor: formSettings.backgroundColor }}
-          className="p-7 shadow-inner border border-gray-200 max-h-[90vh] overflow-y-auto justify-center"
-        >
-          <div className="flex items-center justify-center">
-            <div className="w-full max-w-xl bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
-              <h2 className="font-bold text-2xl mb-2 text-gray-900">
-                {formMeta.title}
-              </h2>
-              <p className="text-gray-600 mb-6">{formMeta.subtitle}</p>
+        <div className="h-screen">
+          <div className="flex justify-between items-center px-2 pb-3 pt-2 bg-[#e7ecff] rounded-md">
+            <div>
+            </div>
+            <div>
+              <button
+                onClick={handlePublish}
+                className="bg-green-600 hover:bg-green-700
+                      text-white
+                      px-4 py-1 rounded-sm
+                      shadow-md hover:shadow-lg
+                      transition cursor-pointer flex justify-around
+                      "
+              >
+                <span>Publish Form</span>
+                <img src={publish} className="h-5" />
+              </button>
+            </div>
+          </div>
+          <div
+            style={{ backgroundColor: formSettings.backgroundColor }}
+            className="p-7 shadow-inner border border-gray-200 max-h-[80vh] overflow-y-auto justify-center"
+          >
+            <div className="flex items-center justify-center">
+              <div className="w-full max-w-xl bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
+                <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                  {formMeta.title}
+                </h1>
+                {formMeta.subtitle && (
+                  <p className="text-gray-600 mb-6">{formMeta.subtitle}</p>
+                )}
 
-              <form className="space-y-5">
-                {fields.map((f) => (
-                  <div key={f.id}>
-                    <label
-                      htmlFor={`field-${f.id}`}
-                      className="block mb-1 font-medium text-gray-700"
-                    >
-                      {f.label}
-                    </label>
+                <form className="space-y-5">
+                  {fields.map((f) => (
+                    <div key={f.id}>
+                      <label
+                        htmlFor={`field-${f.id}`}
+                        className="block mb-1 font-medium text-gray-700"
+                      >
+                        {f.label}
+                      </label>
 
-                    {f.type === "long_text" && (
-                      <textarea
-                        className="border border-gray-300 rounded-md p-3 w-full 
+                      {f.type === "long_text" && (
+                        <textarea
+                          className="border border-gray-300 rounded-md p-3 w-full 
                                  focus:outline-none focus:border-transparent focus:ring-2 focus:ring-indigo-500"
-                        required={f.required}
-                      />
-                    )}
-                    {f.type === "short_text" && (
-                      <input
-                        type="text"
-                        className="border border-gray-300 rounded-md p-3 w-full 
+                          required={f.required}
+                        />
+                      )}
+                      {f.type === "short_text" && (
+                        <input
+                          type="text"
+                          className="border border-gray-300 rounded-md p-3 w-full 
                                  focus:outline-none focus:border-transparent focus:ring-2 focus:ring-indigo-500"
-                        required={f.required}
-                      />
-                    )}
-                    {f.type === "email" && (
-                      <input
-                        type="email"
-                        className="border border-gray-300 rounded-md p-3 w-full 
+                          required={f.required}
+                        />
+                      )}
+                      {f.type === "email" && (
+                        <input
+                          type="email"
+                          className="border border-gray-300 rounded-md p-3 w-full 
                                  focus:outline-none focus:border-transparent focus:ring-2 focus:ring-indigo-500"
-                        required={f.required}
-                      />
-                    )}
-                    {f.type === "date" && (
-                      <input
-                        type="date"
-                        className="border border-gray-300 rounded-md p-3 w-full 
+                          required={f.required}
+                        />
+                      )}
+                      {f.type === "date" && (
+                        <input
+                          type="date"
+                          className="border border-gray-300 rounded-md p-3 w-full 
                                  focus:outline-none focus:border-transparent focus:ring-2 focus:ring-indigo-500"
-                        required={f.required}
-                      />
-                    )}
-                    {f.type === "number" && (
-                      <input
-                        type="number"
-                        className="border border-gray-300 rounded-md p-3 w-full 
+                          required={f.required}
+                        />
+                      )}
+                      {f.type === "number" && (
+                        <input
+                          type="number"
+                          className="border border-gray-300 rounded-md p-3 w-full 
                                  focus:outline-none focus:border-transparent focus:ring-2 focus:ring-indigo-500"
-                        required={f.required}
-                      />
-                    )}
-                    {f.type === "phone" && (
-                      <input
-                        type="tel"
-                        placeholder="+1 (555) 000-0000"
-                        className="border border-gray-300 rounded-md p-3 w-full 
+                          required={f.required}
+                        />
+                      )}
+                      {f.type === "phone" && (
+                        <input
+                          type="tel"
+                          placeholder="+1 (555) 000-0000"
+                          className="border border-gray-300 rounded-md p-3 w-full 
                                  focus:outline-none focus:border-transparent focus:ring-2 focus:ring-indigo-500"
-                        required={f.required}
-                      />
-                    )}
-                    {f.type === "url" && (
-                      <input
-                        type="url"
-                        placeholder="https://example.com"
-                        className="border border-gray-300 rounded-md p-3 w-full 
+                          required={f.required}
+                        />
+                      )}
+                      {f.type === "url" && (
+                        <input
+                          type="url"
+                          placeholder="https://example.com"
+                          className="border border-gray-300 rounded-md p-3 w-full 
                                  focus:outline-none focus:border-transparent focus:ring-2 focus:ring-indigo-500"
-                        required={f.required}
-                      />
-                    )}
-                    {f.type === "password" && (
-                      <input
-                        type="password"
-                        className="border border-gray-300 rounded-md p-3 w-full 
+                          required={f.required}
+                        />
+                      )}
+                      {f.type === "password" && (
+                        <input
+                          type="password"
+                          className="border border-gray-300 rounded-md p-3 w-full 
                                  focus:outline-none focus:border-transparent focus:ring-2 focus:ring-indigo-500"
-                        required={f.required}
-                      />
-                    )}
-                    {f.type === "time" && (
-                      <input
-                        type="time"
-                        className="border border-gray-300 rounded-md p-3 w-full 
+                          required={f.required}
+                        />
+                      )}
+                      {f.type === "time" && (
+                        <input
+                          type="time"
+                          className="border border-gray-300 rounded-md p-3 w-full 
                                  focus:outline-none focus:border-transparent focus:ring-2 focus:ring-indigo-500"
-                        required={f.required}
-                      />
-                    )}
-                    {f.type === "file" && (
-                      <input
-                        type="file"
-                        className="border border-gray-300 rounded-md p-3 w-full 
+                          required={f.required}
+                        />
+                      )}
+                      {f.type === "file" && (
+                        <input
+                          type="file"
+                          className="border border-gray-300 rounded-md p-3 w-full 
                                  focus:outline-none focus:border-transparent focus:ring-2 focus:ring-indigo-500"
-                        required={f.required}
-                      />
-                    )}
+                          required={f.required}
+                        />
+                      )}
 
-                    {f.type === "checkbox_group" && (
-                      <fieldset>
-                        {f.options?.map((opt, idx) => (
+                      {f.type === "checkbox_group" && (
+                        <fieldset>
+                          {f.options?.map((opt, idx) => (
+                            <label
+                              key={idx}
+                              className="flex items-center space-x-2 text-gray-700"
+                            >
+                              <input
+                                type="checkbox"
+                                className="w-5 h-5 accent-indigo-500"
+                                required={f.required}
+                              />
+                              <span>{opt}</span>
+                            </label>
+                          ))}
+                        </fieldset>
+                      )}
+                      {f.type === "radio_group" &&
+                        f.options?.map((opt, idx) => (
                           <label
                             key={idx}
-                            className="flex items-center space-x-2 text-gray-700"
+                            className="flex items-center space-x-2 text-gray-700 mb-1"
                           >
                             <input
-                              type="checkbox"
-                              className="w-5 h-5 accent-indigo-500"
+                              type="radio"
+                              name={f.id}
+                              className="w-5 h-5 cursor-pointer text-blue-600 border-gray-300 focus:ring-blue-500"
                               required={f.required}
                             />
                             <span>{opt}</span>
                           </label>
                         ))}
-                      </fieldset>
-                    )}
-                    {f.type === "radio_group" &&
-                      f.options?.map((opt, idx) => (
-                        <label
-                          key={idx}
-                          className="flex items-center space-x-2 text-gray-700 mb-1"
-                        >
-                          <input
-                            type="radio"
-                            name={f.id}
-                            className="w-5 h-5 cursor-pointer text-blue-600 border-gray-300 focus:ring-blue-500"
-                            required={f.required}
-                          />
-                          <span>{opt}</span>
-                        </label>
-                      ))}
 
-                    {f.type === "select" && (
-                      <div className="relative" ref={dropdownRef}>
-                        <div
-                          onClick={() =>
-                            setOpenDropdown(openDropdown === f.id ? null : f.id)
-                          }
-                          className="
+                      {f.type === "select" && (
+                        <div className="relative" ref={dropdownRef}>
+                          <div
+                            onClick={() =>
+                              setOpenDropdown(
+                                openDropdown === f.id ? null : f.id,
+                              )
+                            }
+                            className="
       border border-gray-300 bg-white
       rounded-lg px-4 py-3
       flex justify-between items-center
@@ -391,53 +410,53 @@ export default function FormBuilder({
       hover:shadow-sm
       transition-all duration-150
       "
-                        >
-                          <span
-                            className={
-                              values[f.id] ? "text-gray-800" : "text-gray-400"
-                            }
                           >
-                            {values[f.id] || "Select option"}
-                          </span>
+                            <span
+                              className={
+                                values[f.id] ? "text-gray-800" : "text-gray-400"
+                              }
+                            >
+                              {values[f.id] || "Select option"}
+                            </span>
 
-                          <svg
-                            className={`w-5 h-5 text-gray-400 transition-transform ${
-                              openDropdown === f.id ? "rotate-180" : ""
-                            }`}
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M19 9l-7 7-7-7"
-                            />
-                          </svg>
-                        </div>
+                            <svg
+                              className={`w-5 h-5 text-gray-400 transition-transform ${
+                                openDropdown === f.id ? "rotate-180" : ""
+                              }`}
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M19 9l-7 7-7-7"
+                              />
+                            </svg>
+                          </div>
 
-                        {openDropdown === f.id && (
-                          <div
-                            className="
+                          {openDropdown === f.id && (
+                            <div
+                              className="
         absolute z-50 mt-2 w-full
         bg-white border border-gray-200
         rounded-xl shadow-lg
         max-h-60 overflow-y-auto
         animate-fadeIn
         "
-                          >
-                            {f.options?.map((opt, idx) => (
-                              <div
-                                key={idx}
-                                onClick={() => {
-                                  setValues((prev) => ({
-                                    ...prev,
-                                    [f.id]: opt,
-                                  }));
-                                  setOpenDropdown(null);
-                                }}
-                                className="
+                            >
+                              {f.options?.map((opt, idx) => (
+                                <div
+                                  key={idx}
+                                  onClick={() => {
+                                    setValues((prev) => ({
+                                      ...prev,
+                                      [f.id]: opt,
+                                    }));
+                                    setOpenDropdown(null);
+                                  }}
+                                  className="
             px-4 py-3
             hover:bg-indigo-50
             hover:text-indigo-600
@@ -446,35 +465,36 @@ export default function FormBuilder({
             first:rounded-t-xl
             last:rounded-b-xl
             "
-                              >
-                                {opt}
-                              </div>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    )}
+                                >
+                                  {opt}
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      )}
 
-                    {f.type === "boolean" && (
-                      <label className="flex items-center text-gray-700">
-                        <input
-                          type="checkbox"
-                          className="mr-2 accent-indigo-500"
-                          required={f.required}
-                        />{" "}
-                        Yes
-                      </label>
-                    )}
-                  </div>
-                ))}
-                <button
-                  onClick={(e) => e.preventDefault()}
-                  className="w-full bg-blue-600 cursor-pointer hover:bg-blue-700 text-white px-5 py-3 rounded-lg 
+                      {f.type === "boolean" && (
+                        <label className="flex items-center text-gray-700">
+                          <input
+                            type="checkbox"
+                            className="mr-2 accent-indigo-500"
+                            required={f.required}
+                          />{" "}
+                          Yes
+                        </label>
+                      )}
+                    </div>
+                  ))}
+                  <button
+                    onClick={(e) => e.preventDefault()}
+                    className="w-full bg-blue-600 cursor-pointer hover:bg-blue-700 text-white px-5 py-3 rounded-lg 
                      font-medium shadow-md transition"
-                >
-                  Submit
-                </button>
-              </form>
+                  >
+                    Submit
+                  </button>
+                </form>
+              </div>
             </div>
           </div>
         </div>
