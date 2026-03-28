@@ -134,13 +134,20 @@ export default function PublicForm() {
       style={{ backgroundColor: form.settings?.backgroundColor || "#f9fafb" }}
     >
       <div className="w-full max-w-xl bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
-        {/* 🔹 Header */}
+        {form?.logo && (
+          <div className="flex justify-center mb-6">
+            <img
+              src={form.logo}
+              alt="Company Logo"
+              className="w-20 h-20 object-cover rounded-full shadow-md"
+            />
+          </div>
+        )}
         <h1 className="text-3xl font-bold text-gray-900 mb-2">{form?.title}</h1>
         {form?.subtitle && (
           <p className="text-gray-600 mb-6">{form?.subtitle}</p>
         )}
 
-        {/* 🔹 Form */}
         <form onSubmit={handleSubmit} className="space-y-6">
           {form.fields.map((f: any) => (
             <div key={f.id}>

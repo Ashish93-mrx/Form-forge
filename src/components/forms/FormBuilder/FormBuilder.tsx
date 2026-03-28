@@ -44,6 +44,7 @@ export default function FormBuilder({
     updateOptions,
     updateTitle,
     updateSubtitle,
+    updateLogo,
     removeField,
     addField,
     reorderFields,
@@ -53,6 +54,7 @@ export default function FormBuilder({
   const [values, setValues] = useState<Record<string, string>>({});
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const bottomRef = useRef<HTMLDivElement | null>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const navigate = useNavigate();
   const scrollToBottom = () => {
     setTimeout(() => {
@@ -61,6 +63,17 @@ export default function FormBuilder({
         block: "end",
       });
     }, 120);
+  };
+
+  const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        updateLogo(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   useEffect(() => {
@@ -86,6 +99,7 @@ export default function FormBuilder({
     const safeMeta = {
       title: formMeta.title || "Untitled Form",
       subtitle: formMeta.subtitle || "",
+      logo: formMeta.logo || "",
     };
 
     const safeSettings = {
@@ -130,6 +144,84 @@ export default function FormBuilder({
             </div>
             <hr className="pt-3 pb-3" />
 
+            <div className="mb-6">
+              <label className="block font-medium text-gray-700 mb-3">
+                Company Logo / Profile Image
+              </label>
+              <div className="flex flex-col items-center gap-4">
+                <div
+                  onClick={() => fileInputRef.current?.click()}
+                  className="relative w-24 h-24 rounded-full border-4 border-dashed border-gray-300 bg-gray-50 flex items-center justify-center cursor-pointer hover:border-indigo-500 hover:bg-indigo-50 transition-all duration-200 group"
+                >
+                  {formMeta.logo ? (
+                    <>
+                      <img
+                        src={formMeta.logo}
+                        alt="Logo"
+                        className="w-full h-full object-cover rounded-full"
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                        <svg
+                          className="w-6 h-6 text-white"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
+                          />
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
+                          />
+                        </svg>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="text-center">
+                      <svg
+                        className="w-8 h-8 text-gray-400 mx-auto mb-1 group-hover:text-indigo-500 transition-colors"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M12 4v16m8-8H4"
+                        />
+                      </svg>
+                      <p className="text-xs text-gray-500 group-hover:text-indigo-500 transition-colors">
+                        Upload
+                      </p>
+                    </div>
+                  )}
+                </div>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleLogoUpload}
+                  className="hidden"
+                />
+                {formMeta.logo && (
+                  <button
+                    type="button"
+                    onClick={() => updateLogo("")}
+                    className="text-sm text-red-600 hover:text-red-800 font-medium cursor-pointer"
+                  >
+                    Remove Image
+                  </button>
+                )}
+              </div>
+            </div>
+
             <label
               htmlFor="formTitle"
               className="block font-medium text-gray-700 mb-1"
@@ -141,7 +233,7 @@ export default function FormBuilder({
               value={formMeta.title}
               onChange={(e) => updateTitle(e.target.value)}
               className="border border-gray-300 rounded-md p-3 w-full mb-3 
-                 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-blue-500"
+                 focus:outline-none focus:border-transparent focus:ring-1 focus:ring-blue-400"
             />
             <input
               type="text"
@@ -149,7 +241,7 @@ export default function FormBuilder({
               onChange={(e) => updateSubtitle(e.target.value)}
               placeholder="Form Purpose (e.g., Job Application, Survey)"
               className="border border-gray-300 rounded-md p-3 w-full mb-6 
-                 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-blue-500"
+                 focus:outline-none focus:border-transparent focus:ring-1 focus:ring-blue-500"
               required
             />
 
@@ -245,9 +337,9 @@ export default function FormBuilder({
                 onClick={handlePublish}
                 className="bg-green-600 hover:bg-green-700
                       text-white
-                      px-4 py-1 rounded-sm
+                      px-2 py-1 rounded-sm
                       shadow-md hover:shadow-lg
-                      transition cursor-pointer flex justify-around
+                      transition cursor-pointer flex items-center gap-1 justify-around
                       "
               >
                 <span>Publish Form</span>
@@ -261,6 +353,15 @@ export default function FormBuilder({
           >
             <div className="flex items-center justify-center">
               <div className="w-full max-w-xl bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
+                {formMeta.logo && (
+                  <div className="flex justify-center mb-6">
+                    <img
+                      src={formMeta.logo}
+                      alt="Company Logo"
+                      className="w-20 h-20 object-cover rounded-full shadow-md"
+                    />
+                  </div>
+                )}
                 <h1 className="text-3xl font-bold text-gray-900 mb-2">
                   {formMeta.title}
                 </h1>
@@ -281,7 +382,7 @@ export default function FormBuilder({
                       {f.type === "long_text" && (
                         <textarea
                           className="border border-gray-300 rounded-md p-3 w-full 
-                                 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-indigo-500"
+                                 focus:outline-none focus:border-transparent focus:ring-1 focus:ring-indigo-500"
                           required={f.required}
                         />
                       )}
@@ -289,7 +390,7 @@ export default function FormBuilder({
                         <input
                           type="text"
                           className="border border-gray-300 rounded-md p-3 w-full 
-                                 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-indigo-500"
+                                 focus:outline-none focus:border-transparent focus:ring-1 focus:ring-indigo-500"
                           required={f.required}
                         />
                       )}
@@ -297,7 +398,7 @@ export default function FormBuilder({
                         <input
                           type="email"
                           className="border border-gray-300 rounded-md p-3 w-full 
-                                 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-indigo-500"
+                                 focus:outline-none focus:border-transparent focus:ring-1 focus:ring-indigo-500"
                           required={f.required}
                         />
                       )}
@@ -305,7 +406,7 @@ export default function FormBuilder({
                         <input
                           type="date"
                           className="border border-gray-300 rounded-md p-3 w-full 
-                                 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-indigo-500"
+                                 focus:outline-none focus:border-transparent focus:ring-1 focus:ring-indigo-500"
                           required={f.required}
                         />
                       )}
@@ -313,7 +414,7 @@ export default function FormBuilder({
                         <input
                           type="number"
                           className="border border-gray-300 rounded-md p-3 w-full 
-                                 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-indigo-500"
+                                 focus:outline-none focus:border-transparent focus:ring-1 focus:ring-indigo-500"
                           required={f.required}
                         />
                       )}
@@ -322,7 +423,7 @@ export default function FormBuilder({
                           type="tel"
                           placeholder="+1 (555) 000-0000"
                           className="border border-gray-300 rounded-md p-3 w-full 
-                                 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-indigo-500"
+                                 focus:outline-none focus:border-transparent focus:ring-1 focus:ring-indigo-500"
                           required={f.required}
                         />
                       )}
@@ -331,7 +432,7 @@ export default function FormBuilder({
                           type="url"
                           placeholder="https://example.com"
                           className="border border-gray-300 rounded-md p-3 w-full 
-                                 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-indigo-500"
+                                 focus:outline-none focus:border-transparent focus:ring-1 focus:ring-indigo-500"
                           required={f.required}
                         />
                       )}
@@ -339,7 +440,7 @@ export default function FormBuilder({
                         <input
                           type="password"
                           className="border border-gray-300 rounded-md p-3 w-full 
-                                 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-indigo-500"
+                                 focus:outline-none focus:border-transparent focus:ring-1 focus:ring-indigo-500"
                           required={f.required}
                         />
                       )}
@@ -347,7 +448,7 @@ export default function FormBuilder({
                         <input
                           type="time"
                           className="border border-gray-300 rounded-md p-3 w-full 
-                                 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-indigo-500"
+                                 focus:outline-none focus:border-transparent focus:ring-1 focus:ring-indigo-500"
                           required={f.required}
                         />
                       )}
@@ -355,7 +456,7 @@ export default function FormBuilder({
                         <input
                           type="file"
                           className="border border-gray-300 rounded-md p-3 w-full 
-                                 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-indigo-500"
+                                 focus:outline-none focus:border-transparent focus:ring-1 focus:ring-indigo-500"
                           required={f.required}
                         />
                       )}

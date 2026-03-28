@@ -12,6 +12,7 @@ export default function EditForm() {
   interface FormData {
   title: string;
   subtitle: string;
+  logo?: string;
   fields: FormField[];
   settings: { backgroundColor: string };
 }
@@ -36,7 +37,7 @@ const [formData, setFormData] = useState<FormData | null>(null);
   const handleSave = async (
     fields: any[],
     settings: any,
-    meta: { title: string; subtitle: string }
+    meta: { title: string; subtitle: string; logo?: string }
   ) => {
     if (!formId) return;
 
@@ -44,6 +45,7 @@ const [formData, setFormData] = useState<FormData | null>(null);
       await updateForm(formId, {
         title: meta.title,
         subtitle: meta.subtitle,
+        logo: meta.logo,
         fields,
         settings,
       });
@@ -83,6 +85,7 @@ const [formData, setFormData] = useState<FormData | null>(null);
         initialMeta={{
           title: formData.title || "Untitled Form",
           subtitle: formData.subtitle || "",
+          logo: formData.logo || "",
         }}
       />
     </div>

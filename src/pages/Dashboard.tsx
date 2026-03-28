@@ -5,7 +5,7 @@ import { getDocs, collection, query, where } from "firebase/firestore";
 import { db } from "../firebase";
 import { getFormResponses, deleteForm } from "../services/firestoreService";
 import { useCSVExport } from "../hooks/useCSVExport";
-import { Menu } from "@headlessui/react"; 
+import { Menu } from "@headlessui/react";
 import { delete2, dots, link } from "../assets";
 
 export default function Dashboard() {
@@ -128,12 +128,27 @@ export default function Dashboard() {
                 className="bg-white border border-gray-200 shadow-sm hover:shadow-lg transition rounded-xl p-5 flex flex-col justify-between"
               >
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-800">
-                    {form.title}
-                  </h3>
-                  <p className="text-sm h-10 text-gray-500 font-[100] my-3 line-clamp-2">
-                    {form.subtitle || " "}
-                  </p>
+                  <div className="flex gap-2 mb-4">
+                    <div>
+                      {form.logo && (
+                        <div className="flex justify-center mb-3">
+                          <img
+                            src={form.logo}
+                            alt={form.title}
+                            className="w-12 h-12 object-cover rounded-full shadow-sm"
+                          />
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex-col gap-2">
+                      <h3 className="text-lg font-semibold text-gray-800">
+                        {form.title}
+                      </h3>
+                      <p className="text-sm h-10 text-gray-500 font-[100] line-clamp-2">
+                        {form.subtitle || " "}
+                      </p>
+                    </div>
+                  </div>
                   <a
                     href={`/form/${form.id}`}
                     target="_blank"
@@ -163,11 +178,10 @@ export default function Dashboard() {
                           {({ active }: { active: boolean }) => (
                             <Link
                               to={`/form/${form.id}/edit`}
-                              className={`block px-4 py-2 text-sm rounded-t-lg transition-colors duration-150 ${
-                                active
+                              className={`block px-4 py-2 text-sm rounded-t-lg transition-colors duration-150 ${active
                                   ? "bg-gray-100 text-gray-900"
                                   : "text-gray-700"
-                              }`}
+                                }`}
                             >
                               Edit
                             </Link>
@@ -180,11 +194,10 @@ export default function Dashboard() {
                               onClick={() =>
                                 handleExport(form.id, form.subtitle)
                               }
-                              className={`block w-full cursor-pointer text-left px-4 py-2 text-sm ${
-                                active
+                              className={`block w-full cursor-pointer text-left px-4 py-2 text-sm ${active
                                   ? "bg-gray-100 text-gray-900"
                                   : "text-gray-700"
-                              }`}
+                                }`}
                             >
                               Export CSV
                             </button>
@@ -198,9 +211,8 @@ export default function Dashboard() {
                                 setDeleteId(form.id);
                                 setDeleteName(form.title);
                               }}
-                              className={`block w-full cursor-pointer text-left px-4 py-2 text-sm text-red-600 rounded-b-lg ${
-                                active ? "bg-red-50" : ""
-                              }`}
+                              className={`block w-full cursor-pointer text-left px-4 py-2 text-sm text-red-600 rounded-b-lg ${active ? "bg-red-50" : ""
+                                }`}
                             >
                               Delete
                             </button>

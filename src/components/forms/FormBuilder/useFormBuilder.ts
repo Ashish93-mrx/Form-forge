@@ -18,14 +18,14 @@ export interface FormSettings {
 
 export function useFormBuilder( initialFields: FormField[] = [],
   initialSettings: any = { backgroundColor: "#ffffff" },
-  initialMeta: { title: string; subtitle: string } = {
+  initialMeta: { title: string; subtitle: string; logo?: string } = {
     title: "Untitled Form",
     subtitle: "",
+    logo: "",
   }) {
   const [fields, setFields] = useState<FormField[]>(initialFields);
   const [formSettings, setFormSettings] = useState(initialSettings);
 
-    // ✅ new state for meta info
   const [formMeta, setFormMeta] = useState(initialMeta);
 
 //   const updateBackgroundColor = (color: string) => {
@@ -36,7 +36,7 @@ export function useFormBuilder( initialFields: FormField[] = [],
     const newField: FormField = {
       id: nanoid(),
       type,
-      label: "Untitled Question",
+      label: "",
       required: false,
       options: type.includes("group") || type === "select" ? ["Option 1"] : [],
     };
@@ -70,6 +70,7 @@ export function useFormBuilder( initialFields: FormField[] = [],
 
   const updateTitle = (title: string) => setFormMeta((prev) => ({ ...prev, title }));
   const updateSubtitle = (subtitle: string) => setFormMeta((prev) => ({ ...prev, subtitle }));
+  const updateLogo = (logo: string) => setFormMeta((prev) => ({ ...prev, logo }));
 
   const toggleRequired = (id: string, required: boolean) => {
   setFields((prev) =>
@@ -80,6 +81,6 @@ export function useFormBuilder( initialFields: FormField[] = [],
 //   const reorderFields = (newOrder: FormField[]) => setFields(newOrder);
 
   return { fields, formSettings, formMeta, addField, updateLabel, updateOptions, reorderFields,updateTitle,
-    updateSubtitle, updateBackgroundColor, removeField,toggleRequired };
+    updateSubtitle, updateBackgroundColor, removeField,toggleRequired, updateLogo };
 }
 

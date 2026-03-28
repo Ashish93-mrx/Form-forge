@@ -6,6 +6,7 @@ export interface FormData {
   id: string;
   title: string;
   subtitle: string;
+  logo?: string;
   fields: FormField[];
   settings: { backgroundColor: string };
 }
@@ -14,11 +15,12 @@ export const createForm = async (
   userId: string,
   fields: any[],
   settings: any,
-  meta: { title: string; subtitle: string }
+  meta: { title: string; subtitle: string; logo?: string }
 ) => {
   const newForm = {
     title: meta.title,
-    subtitle: meta.subtitle, //
+    subtitle: meta.subtitle,
+    logo: meta.logo,
     fields,
     settings,
     createdBy: userId,
@@ -40,6 +42,7 @@ export const getFormById = async (formId: string) => {
     id: snapshot.id,
     title: data.title ?? "",
     subtitle: data.subtitle ?? "",
+    logo: data.logo ?? "",
     fields: data.fields ?? [],
     settings: data.settings ?? { backgroundColor: "#ffffff" }
   };
@@ -82,6 +85,7 @@ export const updateForm = async (
   updates: {
     title?: string;
     subtitle?: string;
+    logo?: string;
     fields?: any[];
     settings?: any;
   }

@@ -1,11 +1,11 @@
 export type FormBuilderProps = {
   initialFields?: any[];
   initialSettings?: any;
-  initialMeta?: { title: string; subtitle: string };
+  initialMeta?: { title: string; subtitle: string; logo?: string };
   onSave: (
     fields: any[],
     settings: any,
-    meta: { title: string; subtitle: string },
+    meta: { title: string; subtitle: string; logo?: string },
   ) => void;
 };
 
