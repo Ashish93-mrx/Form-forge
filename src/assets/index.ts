@@ -7,7 +7,23 @@ import back from "./images/back.png";
 import close from "./images/close.png";
 import success from "./images/success.png";
 import publish from "./images/publish.png";
-import link from "./images/link.png"
+import link from "./images/link.png";
+import dashboard from "./images/dashboard.png";
+import analytics from "./images/analytics.png";
+import settings from "./images/settings.png";
 
-
-export { fast, insight, internet, dots, delete2, back, close, success, publish, link };
+export {
+  fast,
+  insight,
+  internet,
+  dots,
+  delete2,
+  back,
+  close,
+  success,
+  publish,
+  link,
+  dashboard,
+  analytics,
+  settings,
+};

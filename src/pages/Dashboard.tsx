@@ -51,7 +51,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="p-6 border-t font-Mont min-h-screen">
+    <div className="p-6 font-Mont min-h-screen">
       <div className="rounded-xl p-6 bg-gradient-to-r from-blue-100 via-indigo-200 to-cyan-200 shadow-md">
         <h1 className="text-2xl font-bold mb-6">Dashboard</h1>
 
