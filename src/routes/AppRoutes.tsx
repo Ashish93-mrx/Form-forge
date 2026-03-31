@@ -9,6 +9,7 @@ import Home from "../pages/Home";
 import NotFound from "../pages/NotFound";
 import CreateFormPage from "../pages/forms/CreateFormPage";
 import EditForm from "../pages/EditForm";
+import Analytics from "../pages/Analytics";
 
 
 
@@ -24,6 +25,14 @@ export default function AppRoutes() {
         element={
           <ProtectedRoute>
             <Dashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/analytics"
+        element={
+          <ProtectedRoute>
+            <Analytics />
           </ProtectedRoute>
         }
       />

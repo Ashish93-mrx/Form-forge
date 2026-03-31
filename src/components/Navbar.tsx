@@ -45,6 +45,11 @@ export default function Navbar() {
                 Dashboard
               </Link>
             )}
+            {location.pathname !== "/analytics" && (
+              <Link to="/analytics" className="hover:text-gray-300 transition">
+                Analytics
+              </Link>
+            )}
             {location.pathname !== "/form/create" && (
               <Link
                 to="/form/create"
